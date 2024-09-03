@@ -1,0 +1,4 @@
+root=true
+
+[*.templ]
+indent_size=2

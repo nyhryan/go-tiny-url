@@ -1,0 +1,33 @@
+package views
+
+import (
+	"fmt"
+	"github.com/nyhryan/go-tiny-url/db"
+)
+
+templ Records(records []db.URLRecords) {
+	for _, record := range records {
+		<tr>
+			<td>
+				<a href={ templ.URL(record.LongURL) } target="_blank">{ record.LongURL }</a>
+			</td>
+			<td>
+				<a
+					href={ templ.URL(fmt.Sprintf("/%s", record.TinyURL)) }
+					target="_blank"
+					id="tiny-url"
+				>
+					{ record.TinyURL }
+				</a>
+			</td>
+			<td>{ fmt.Sprintf("%d", record.ClickCount) }</td>
+			<td
+				hx-delete={ string(templ.URL(fmt.Sprintf("/api/%d", record.ID))) }
+				hx-target="closest tr"
+				hx-swap="delete"
+			>
+        <button type="button" class="btn-close" aria-label="Close"></button>
+      </td>
+		</tr>
+	}
+}
